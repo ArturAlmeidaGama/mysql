@@ -1,0 +1,3 @@
+use db_contas_a_pagar;
+
+select tb_fornecedor.cnpj,tb_fornecedor.razao_social,tb_pedido_quitacao.valor_pago,tb_pedido.valor_pedido

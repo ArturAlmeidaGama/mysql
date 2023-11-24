@@ -1,0 +1,7 @@
+use db_contas_a_pagar;
+
+select tb_fornecedor_contato.id_fornecedor,tb_fornecedor_contato.email,tb_fornecedor_contato.telefone,tb_fornecedor.cnpj,tb_fornecedor.razao_social,tb_tipo_contato.descricao,tb_tipo_contato.id
+from tb_fornecedor
+inner join tb_fornecedor_contato on tb_fornecedor.id=tb_fornecedor_contato.id_fornecedor
+inner join tb_tipo_contato on tb_fornecedor_contato.id_tipo_contato=tb_tipo_contato.id
+where tb_tipo_contato.id=1
