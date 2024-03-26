@@ -1,63 +1,79 @@
 create database etec;
+
 use etec;
+
 create table parents
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-phoneNumber varchar(11) not null,
-cpf char(11) unique not null
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	phoneNumber varchar(11) not null,
+	cpf char(11) unique not null
 );
+
 create table students
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-age int(2) not null,
-rm char(11) unique not null,
-cpf char(11) unique not null,
-parentsCPF char(11),
-idCourse int not null,
-idClass int not null,
-foreign key (parentsCPF) references parents(cpf),
-foreign key (idCourse) references courses(id),
-foreign key (idClass) references class(id)
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	age int(2) not null,
+	rm char(11) unique not null,
+	cpf char(11) unique not null,
+	parentsCPF char(11),
+	idCourse int not null,
+	idClass int not null,
+	foreign key (parentsCPF) references parents(cpf),
+	foreign key (idCourse) references courses(id),
+	foreign key (idClass) references class(id)
 );
-create table employeesNotTeatchers
+
+create table employes
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-age int (2) not null,
-cpf char(11) unique not null,
-phoneNumber varchar(11) not null,
-email varchar(100) not null,
-job varchar(30) not null,
-dateAdmitted date not null
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	age int (2) not null,
+	cpf char(11) unique not null,
+	phoneNumber varchar(11) not null,
+	email varchar(100) not null,
+	job varchar(30) not null,
+	dateAdmitted date not null
 );
+
 create table teachers
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-age int(2) not null,
-cpf char(11) unique not null,
-phoneNumber varchar(11) not null
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	age int(2) not null,
+	cpf char(11) unique not null,
+	phoneNumber varchar(11) not null
 );
+
 create table courses
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-duration varchar(20) not null
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	duration varchar(20) not null
 );
+
 create table schoolDisciplines
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-idCourse int not null,
-idTeacher int not null,
-foreign key (idCourse) references courses(id),
-foreign key (idTeacher) references teachers(id)
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	idCourse int not null,
+	idTeacher int not null,
+	foreign key (idCourse) references courses(id),
+	foreign key (idTeacher) references teachers(id)
 );
+
 create table class
 (
-id int primary key auto_increment,
-fullName varchar(50) not null,
-amountStudents int not null
+	id int primary key auto_increment,
+	fullName varchar(50) not null,
+	amountStudents int not null
+);
+
+create table teacher_class
+(
+	idTeacher int not null,
+	idClass int not null,
+	foreign key (idTeacher) references teachers(id),
+	foreign key (idClass) references class(id)
 );
