@@ -1,13 +1,25 @@
 create database etec;
-
 use etec;
 
-create table parents
+create table relatives
 (
 	id int primary key auto_increment,
 	fullName varchar(50) not null,
 	phoneNumber varchar(11) not null,
 	cpf char(11) unique not null
+);
+
+create table class
+(
+	id int primary key auto_increment,
+	`description` varchar(50) not null
+);
+
+create table courses
+(
+	id int primary key auto_increment,
+	`description` varchar(50) not null,
+	monthDuration int(2) not null
 );
 
 create table students
@@ -17,15 +29,15 @@ create table students
 	age int(2) not null,
 	rm char(11) unique not null,
 	cpf char(11) unique not null,
-	parentsCPF char(11),
+    idRelative int not null,
 	idCourse int not null,
 	idClass int not null,
-	foreign key (parentsCPF) references parents(cpf),
+	foreign key (idRelative) references relatives(id),
 	foreign key (idCourse) references courses(id),
 	foreign key (idClass) references class(id)
 );
 
-create table employes
+create table administration
 (
 	id int primary key auto_increment,
 	fullName varchar(50) not null,
@@ -37,43 +49,27 @@ create table employes
 	dateAdmitted date not null
 );
 
+create table financialEmployes
+(
+	
+)
 create table teachers
 (
 	id int primary key auto_increment,
 	fullName varchar(50) not null,
 	age int(2) not null,
+    email varchar(100) not null,
 	cpf char(11) unique not null,
-	phoneNumber varchar(11) not null
+	phoneNumber varchar(11) not null,
+    dataAdmitted date not null
 );
 
-create table courses
+create table disciplines
 (
 	id int primary key auto_increment,
-	fullName varchar(50) not null,
-	duration varchar(20) not null
-);
-
-create table schoolDisciplines
-(
-	id int primary key auto_increment,
-	fullName varchar(50) not null,
+	`description` varchar(50) not null,
 	idCourse int not null,
 	idTeacher int not null,
 	foreign key (idCourse) references courses(id),
 	foreign key (idTeacher) references teachers(id)
-);
-
-create table class
-(
-	id int primary key auto_increment,
-	fullName varchar(50) not null,
-	amountStudents int not null
-);
-
-create table teacher_class
-(
-	idTeacher int not null,
-	idClass int not null,
-	foreign key (idTeacher) references teachers(id),
-	foreign key (idClass) references class(id)
 );
