@@ -1,4 +1,5 @@
 create database etec;
+
 use etec;
 
 create table relatives
@@ -7,12 +8,6 @@ create table relatives
 	fullName varchar(50) not null,
 	phoneNumber varchar(11) not null,
 	cpf char(11) unique not null
-);
-
-create table class
-(
-	id int primary key auto_increment,
-	`description` varchar(50) not null
 );
 
 create table courses
@@ -29,12 +24,12 @@ create table students
 	age int(2) not null,
 	rm char(11) unique not null,
 	cpf char(11) unique not null,
+    entryDate date not null,
+    departureDate date not null,
     idRelative int not null,
 	idCourse int not null,
-	idClass int not null,
 	foreign key (idRelative) references relatives(id),
-	foreign key (idCourse) references courses(id),
-	foreign key (idClass) references class(id)
+    foreign key (idCourse) references courses(id)
 );
 
 create table administration
@@ -49,22 +44,19 @@ create table administration
 	dateAdmitted date not null
 );
 
-create table financialEmployes
-(
-	
-)
 create table teachers
 (
 	id int primary key auto_increment,
 	fullName varchar(50) not null,
 	age int(2) not null,
     email varchar(100) not null,
-	cpf char(11) unique not null,
+	cpf char(14) unique not null,
+    adress varchar(100) not null,
 	phoneNumber varchar(11) not null,
     dataAdmitted date not null
 );
 
-create table disciplines
+create table subjects
 (
 	id int primary key auto_increment,
 	`description` varchar(50) not null,
@@ -72,4 +64,35 @@ create table disciplines
 	idTeacher int not null,
 	foreign key (idCourse) references courses(id),
 	foreign key (idTeacher) references teachers(id)
+);
+
+create table planningClasses (
+	id int auto_increment primary key,
+    idCourse int not null,
+    idSubject int not null,
+    idTeacher int not null,
+    `hour` time not null,
+    dayWeek date not null,
+	foreign key (idTeacher) references teachers(id),
+    foreign key (idSubject) references subjects(id)
+);
+
+create table studentsSubjectsTeachers (
+	idStudent int not null,
+    idTeacher int not null,
+    idSubject int not null,
+    foreign key (idStudent) references students(id),
+    foreign key (idTeacher) references teachers(id),
+    foreign key (idSubject) references subjects(id)
+);
+
+create table grade (
+	id int auto_increment primary key,
+    idStudent int not null,
+    idSubject int not null,
+    idCourse int not null,
+    `value` varchar (2) not null,
+    foreign key (idStudent) references students(id),
+    foreign key (idSubject) references subjects(id),
+    foreign key (idCourse) references courses(id)
 );
